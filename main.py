@@ -2,7 +2,7 @@
 import random
 
 # Put all the functions into another file and import them
-import functions_lab06_solution
+import functions
 
 # Define two Dice
 small_dice_options = list(range(1, 7))
@@ -83,7 +83,7 @@ if not input_invalid:
     print("    |    The hero\'s weapon is " + str(weapons[weapon_roll - 1]))
 
     # Lab 06 - Question 5b
-    functions_lab06_solution.adjust_combat_strength(combat_strength, m_combat_strength)
+    functions.adjust_combat_strength(combat_strength, m_combat_strength)
 
     # Weapon Roll Analysis
     print("    ------------------------------------------------------------------")
@@ -120,20 +120,20 @@ if not input_invalid:
     input("Roll for first item (enter)")
 
     # Collect Loot First time
-    loot_options, belt = functions_lab06_solution.collect_loot(loot_options, belt)
+    loot_options, belt = functions.collect_loot(loot_options, belt)
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Roll for second item (Press enter)")
 
     # Collect Loot Second time
-    loot_options, belt = functions_lab06_solution.collect_loot(loot_options, belt)
+    loot_options, belt = functions.collect_loot(loot_options, belt)
 
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
     print("    |    Your belt: ", belt)
 
     # Use Loot
-    belt, health_points = functions_lab06_solution.use_loot(belt, health_points)
+    belt, health_points = functions.use_loot(belt, health_points)
 
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
@@ -189,7 +189,7 @@ if not input_invalid:
                 print("Number entered must be a whole number between 0-3 inclusive, try again")
             elif (not num_dream_lvls == 0):
                 health_points -= 1
-                crazy_level = functions_lab06_solution.inception_dream(num_dream_lvls)
+                crazy_level = functions.inception_dream(num_dream_lvls)
                 combat_strength += crazy_level
                 print("combat strength: " + str(combat_strength))
                 print("health points: " + str(health_points))
@@ -209,14 +209,14 @@ if not input_invalid:
         if not (attack_roll % 2 == 0):
             print("    |", end="    ")
             input("You strike (Press enter)")
-            m_health_points = functions_lab06_solution.hero_attacks(combat_strength, m_health_points)
+            m_health_points = functions.hero_attacks(combat_strength, m_health_points)
             if m_health_points == 0:
                 num_stars = 3
             else:
                 print("    |", end="    ")
                 print("------------------------------------------------------------------")
                 input("    |    The monster strikes (Press enter)!!!")
-                health_points = functions_lab06_solution.monster_attacks(m_combat_strength, health_points)
+                health_points = functions.monster_attacks(m_combat_strength, health_points)
                 if health_points == 0:
                     num_stars = 1
                 else:
@@ -224,14 +224,14 @@ if not input_invalid:
         else:
             print("    |", end="    ")
             input("The Monster strikes (Press enter)")
-            health_points = functions_lab06_solution.monster_attacks(m_combat_strength, health_points)
+            health_points = functions.monster_attacks(m_combat_strength, health_points)
             if health_points == 0:
                 num_stars = 1
             else:
                 print("    |", end="    ")
                 print("------------------------------------------------------------------")
                 input("The hero strikes!! (Press enter)")
-                m_health_points = functions_lab06_solution.hero_attacks(combat_strength, m_health_points)
+                m_health_points = functions.hero_attacks(combat_strength, m_health_points)
                 if m_health_points == 0:
                     num_stars = 3
                 else:
@@ -266,6 +266,6 @@ if not input_invalid:
         stars_display = "*" * num_stars
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
 
-        functions_lab06_solution.save_game(winner, hero_name=short_name, num_stars=num_stars)       
+        functions.save_game(winner, hero_name=short_name, num_stars=num_stars)       
 
 
