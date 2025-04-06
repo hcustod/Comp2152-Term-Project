@@ -1,14 +1,11 @@
+# Import the random library to use for the dice later
 import random
-from explore_map import start_explore_map
-import functions
 
-<<<<<<< HEAD
 # Put all the functions into another file and import them
 import functions
 
 import user
 from user import User
-import stats
 
 current_user = None
 
@@ -40,7 +37,27 @@ match menu_selection:
         
 
 
-=======
+
+# Define two Dice
+small_dice_options = list(range(1, 7))
+big_dice_options = list(range(1, 21))
+
+# Define the Weapons
+weapons = ["Fist", "Knife", "Club", "Gun", "Bomb", "Nuclear Bomb"]
+
+# Define the Loot
+loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
+belt = []
+
+# Define the Monster's Powers
+monster_powers = {
+    "Fire Magic": 2,
+    "Freeze Time": 4,
+    "Super Hearing": 6
+}
+from explore_map import start_explore_map
+import functions
+
 def get_valid_input(prompt, valid_range, error_message):
     """Handles input validation."""
     while True:
@@ -49,7 +66,6 @@ def get_valid_input(prompt, valid_range, error_message):
             return int(user_input)
         else:
             print(error_message)
->>>>>>> origin/main
 
 def attack(attack_strength, health_points):
     """Simulates an attack on health points based on strength."""
@@ -71,18 +87,6 @@ def main_game():
         "Super Hearing": 6
     }
 
-    # Get valid combat strength input
-    combat_strength = get_valid_input("Enter your combat Strength (1-6): ", range(1, 7), "Please enter a valid combat strength between 1 and 6.")
-    m_combat_strength = get_valid_input("Enter the monster's combat Strength (1-6): ", range(1, 7), "Please enter a valid monster combat strength between 1 and 6.")
-
-<<<<<<< HEAD
-# Define the Monster's Powers
-monster_powers = {
-    "Fire Magic": 2,
-    "Freeze Time": 4,
-    "Super Hearing": 6
-}
-
 # Define the number of stars to award the player
 num_stars = 0
 
@@ -92,10 +96,41 @@ i = 0
 input_invalid = True
 
 while input_invalid and i in range(5):
-=======
+    # Get valid combat strength input
+    combat_strength = get_valid_input("Enter your combat Strength (1-6): ", range(1, 7), "Please enter a valid combat strength between 1 and 6.")
+    m_combat_strength = get_valid_input("Enter the monster's combat Strength (1-6): ", range(1, 7), "Please enter a valid monster combat strength between 1 and 6.")
+
     # Weapon roll
->>>>>>> origin/main
     print("    ------------------------------------------------------------------")
+    print("    |", end="    ")
+    combat_strength = input("Enter your combat Strength (1-6): ")
+    print("    |", end="    ")
+    m_combat_strength = input("Enter the monster's combat Strength (1-6): ")
+
+    # Validate input: Check if the string inputted is numeric
+    if (not combat_strength.isnumeric()) or (not m_combat_strength.isnumeric()):
+        # If one of the inputs are invalid, print error message and halt
+        print("    |    One or more invalid inputs. Player needs to enter integer numbers for Combat Strength    |")
+        i = i + 1
+        continue
+
+    # Note: Now safe to cast combat_strength to integer
+    # Validate input: Check if the string inputted
+    elif (int(combat_strength) not in range(1, 7)) or (int(m_combat_strength)) not in range(1, 7):
+        print("    |    Enter a valid integer between 1 and 6 only")
+        i = i + 1
+        continue
+
+    else:
+        input_invalid = False
+        break
+
+if not input_invalid:
+    input_invalid = False
+    combat_strength = int(combat_strength)
+    m_combat_strength = int(m_combat_strength)
+
+    # Roll for weapon
     print("    |", end="    ")
     input("Roll the dice for your weapon (Press enter)")
 
@@ -118,11 +153,6 @@ while input_invalid and i in range(5):
     weapon_roll = random.choice(small_dice_options)
     combat_strength = min(6, combat_strength + weapon_roll)
     print("    |    The hero's weapon is " + str(weapons[weapon_roll - 1]))
-
-<<<<<<< HEAD
-    # Limit the combat strength to 6
-    combat_strength = min(6, (combat_strength + weapon_roll))
-    print("    |    The hero\'s weapon is " + str(weapons[weapon_roll - 1]))
     
     # Log weapon for stats
     current_user.update_stats("weapon", str(weapons[weapon_roll - 1]))
@@ -130,13 +160,10 @@ while input_invalid and i in range(5):
 
     # Lab 06 - Question 5b
     functions.adjust_combat_strength(combat_strength, m_combat_strength)
-
-    # Weapon Roll Analysis
-=======
     # Adjust combat strength
     functions.adjust_combat_strength(combat_strength, m_combat_strength)
 
->>>>>>> origin/main
+    # Weapon Roll Analysis
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Analyze the Weapon roll (Press enter)")
@@ -148,6 +175,7 @@ while input_invalid and i in range(5):
     else:
         print("--- Nice weapon, friend!")
 
+    # If the weapon rolled is not a Fist, print out "Thank goodness you didn't roll the Fist..."
     if weapons[weapon_roll - 1] != "Fist":
         print("    |    --- Thank goodness you didn't roll the Fist...")
 
@@ -158,20 +186,23 @@ while input_invalid and i in range(5):
     health_points = random.choice(big_dice_options)
     print("    |    Player rolled " + str(health_points) + " health points")
 
+    # Roll for monster health points
     print("    |", end="    ")
     input("Roll the dice for the monster's health points (Press enter)")
     m_health_points = random.choice(big_dice_options)
     print("    |    Player rolled " + str(m_health_points) + " health points for the monster")
 
+    # Collect Loot
     print("    ------------------------------------------------------------------")
     print("    |    !!You find a loot bag!! You look inside to find 2 items:")
     print("    |", end="    ")
     input("Roll for first item (enter)")
 
-<<<<<<< HEAD
     # Collect Loot First time
     loot_options, belt = functions.collect_loot(loot_options, belt)
 
+
+    loot_options, belt = functions.collect_loot(loot_options, belt)
 
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
@@ -182,29 +213,21 @@ while input_invalid and i in range(5):
 
     # Log loot
     current_user.update_stats("loot", belt[:])
-=======
-    loot_options, belt = functions.collect_loot(loot_options, belt)
-
-    print("    ------------------------------------------------------------------")
-    print("    |", end="    ")
-    input("Roll for second item (Press enter)")
-    loot_options, belt = functions.collect_loot(loot_options, belt)
->>>>>>> origin/main
 
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
     print("    |    Your belt: ", belt)
 
-<<<<<<< HEAD
     # Use Loot
-=======
->>>>>>> origin/main
     belt, health_points = functions.use_loot(belt, health_points)
 
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Analyze the roll (Press enter)")
+    # Compare Player vs Monster's strength
     print("    |    --- You are matched in strength: " + str(combat_strength == m_combat_strength))
+
+    # Check the Player's overall strength and health
     print("    |    --- You have a strong player: " + str((combat_strength + health_points) >= 15))
 
     # Monster's Magic Power
@@ -232,8 +255,8 @@ while input_invalid and i in range(5):
     m_combat_strength += monster_powers[power_roll]
     print("    |    The monster's combat strength is now " + str(m_combat_strength) + " using the " + power_roll + " magic power")
 
-    # Dream levels interaction
-    num_dream_lvls = -1
+    # Lab Week 06 - Question 6
+    num_dream_lvls = -1 # Initialize the number of dream levels
     while (num_dream_lvls < 0 or num_dream_lvls > 3):
         print("    |", end="    ")
         num_dream_lvls = input("How many dream levels do you want to go down? (Enter a number 0-3)")
@@ -255,11 +278,14 @@ while input_invalid and i in range(5):
                 print("health points: " + str(health_points))
         print("num_dream_lvls: ", num_dream_lvls)
 
-    # Battle Setup
+    # Fight Sequence
+    # Loop while the monster and the player are alive. Call fight sequence functions
     print("    ------------------------------------------------------------------")
     print("    |    You meet the monster. FIGHT!!")
     while m_health_points > 0 and health_points > 0:
         print("    |", end="    ")
+
+        # Lab 5: Question 5:
         input("Roll to see who strikes first (Press Enter)")
 
         attack_roll = random.choice(small_dice_options)
@@ -267,10 +293,7 @@ while input_invalid and i in range(5):
             print("    |", end="    ")
             input("You strike (Press enter)")
             m_health_points = functions.hero_attacks(combat_strength, m_health_points)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
             if m_health_points == 0:
                 num_stars = 3
             else:
@@ -278,10 +301,7 @@ while input_invalid and i in range(5):
                 print("------------------------------------------------------------------")
                 input("    |    The monster strikes (Press enter)!!!")
                 health_points = functions.monster_attacks(m_combat_strength, health_points)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
                 if health_points == 0:
                     num_stars = 1
                 else:
@@ -290,10 +310,7 @@ while input_invalid and i in range(5):
             print("    |", end="    ")
             input("The Monster strikes (Press enter)")
             health_points = functions.monster_attacks(m_combat_strength, health_points)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
             if health_points == 0:
                 num_stars = 1
             else:
@@ -301,10 +318,7 @@ while input_invalid and i in range(5):
                 print("------------------------------------------------------------------")
                 input("The hero strikes!! (Press enter)")
                 m_health_points = functions.hero_attacks(combat_strength, m_health_points)
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
                 if m_health_points == 0:
                     num_stars = 3
                 else:
@@ -321,14 +335,11 @@ while input_invalid and i in range(5):
     else:
         winner = "Monster"
 
-<<<<<<< HEAD
         # Log game winner for stats
         current_user.update_stats("winner", winner)
         current_user.update_stats("stars", num_stars)
 
 
-=======
->>>>>>> origin/main
     tries = 0
     input_invalid = True
     while input_invalid and tries in range(5):
@@ -353,32 +364,11 @@ while input_invalid and i in range(5):
 
 
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
-<<<<<<< HEAD
 
         #functions.save_game(winner, hero_name=short_name, num_stars=num_stars) 
 
         functions.save_game_v2(current_user)  
 
         print("game saved successfully\n")   
-=======
-        functions.save_game(winner, hero_name=short_name, num_stars=num_stars)
->>>>>>> origin/main
 
 
-if __name__ == "__main__":
-    while True:
-        print("\n=== Main Menu ===")
-        print("1. Start Battle")
-        print("2. Explore Map")
-        print("3. Exit")
-        choice = input("Enter your choice: ")
-
-        if choice == "1":
-            main_game()
-        elif choice == "2":
-            start_explore_map()  # Call the updated function
-        elif choice == "3":
-            print("Thanks for playing!")
-            break
-        else:
-            print("Invalid choice. Try again.")
