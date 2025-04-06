@@ -1,6 +1,5 @@
-# function.py
-
 import random
+from user import User
 
 def use_loot(belt, health_points):
     good_loot_options = ["Health Potion", "Leather Boots"]
@@ -123,6 +122,20 @@ def save_game(winner, hero_name="", num_stars=0):
             file.write("Monster has killed the hero previously\n")
 
 
+def save_game_v2(current_user):
+
+        # Collect dictionary of stats from user object
+        user_stats = current_user.return_stats()
+
+        # Save info to text file
+        with open("save.txt", "a") as file:
+            file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n")
+            
+            if user_stats["winner"] == "Monster":
+                file.write("Monster has killed the hero previously\n")
+                
+            print("Game saved to file successfully\n\n")
+
 def load_game():
     try:
         with open("save.txt", "r") as file:
@@ -149,3 +162,82 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
             print("    |    ... Increasing the hero's combat strength since you lost last time")
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
+
+# Eric Laudrum:
+# Create an account file in accounts.txt
+def create_account():
+        global current_user
+   
+        # Wait until an accepted name has been submitted
+        accepted_name = False
+        while (not accepted_name):
+            
+            # Enter and Verify Username
+            print("What is your name hero?")
+            username = input("Please enter a name: ")
+
+            # Initialize user object (without password at first)
+            user_object = User(username, "")
+
+            # Check if username is available
+            if user_object.username_available():
+                break
+
+            print("That name is not available.\n")
+
+
+        # Enter Verify Password
+        password = input("Enter a password: ")
+        password_confirmation = input("Confirm your password: ")
+
+        # User successfully confirms password
+        if user_object.confirm_passwords_match(password, password_confirmation):
+            
+            # Assign password to user object
+            user_object.password = password
+
+            # Create a user account
+            user_object.create_user_account()
+            print("Account created.")
+
+            # Set the user object as the current user
+            current_user = user_object
+            print(f"Welcome {current_user.username}")
+        
+        else:
+            print("Error: Passwords do not match")
+
+        return current_user
+
+
+# Sign in function
+def sign_in():
+    global current_user
+    
+    signed_in = False
+
+    while not signed_in:
+        # Input sign in details
+        username = input("Enter a username: ")
+        password = input("Enter a password: ")
+
+        # Initialize user object
+        user_object = User(username, password)
+        print("user object created")
+
+        # Sign in successful
+        if user_object.verify_login(): 
+            
+            # Update global variable
+            current_user = user_object
+
+            signed_in = True
+
+            # Print Greeting and Stats
+            user_object.opening_stats()
+
+        # Sign in failed 
+        else:
+            print("Sign in failed. Try again!")
+
+    return current_user
