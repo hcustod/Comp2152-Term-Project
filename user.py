@@ -184,16 +184,15 @@ class User:
 
         # User has a winning record
         if(wins > losses):
-            if(losses >= 0 and losses < 3):
+            if(losses >= 0 and losses < 4):
                 
                 hero_intro += ", a new Hero to the group looking to make their mark. It's... "
-            elif(losses >= 3 and losses < 6):
+            elif(losses >= 4 and losses < 10):
                 hero_intro += ", the Hero other Heroes have said to look out for as up and coming.. "
-            elif(losses >= 6 and losses < 10):
-                hero_intro += ", one of the most exciting Heroes to come out of the console since the admin. It's..."
             else:
                 hero_intro += ", your Hero's favourite Hero, the lengendary.... "
 
+        # User has even winning record
         elif(losses == wins):
             if(losses < 3):
                 hero_intro += ", a new Hero who can dish it out as well as they can take it. It's... "
@@ -204,6 +203,7 @@ class User:
             else:
                 hero_intro += ", the great equalizer.... It's.. "
 
+        # User as losing record
         elif(wins < losses):
             if(losses >= 0 and losses < 3):
                 hero_intro += " you know what, I honestly haven't bothered to learn their name..\nWhat did you say it was? Oh right, it's "
