@@ -1,1 +1,2 @@
 hero_name:admin | winner:Hero | stars:3 | weapon:Club | loot:Leather Boots, Flimsy Gloves;
+hero_name:hank | winner:Hero | stars:3 | weapon:Bomb | loot:Health Potion, Poison Potion;
