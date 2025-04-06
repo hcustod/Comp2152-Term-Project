@@ -2,6 +2,10 @@
 
 import random
 
+# Will the line below print when you import function.py into main.py?
+# print("Inside function.py")
+
+
 def use_loot(belt, health_points):
     good_loot_options = ["Health Potion", "Leather Boots"]
     bad_loot_options = ["Poison Potion"]
@@ -115,12 +119,30 @@ def inception_dream(num_dream_lvls):
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 
-def save_game(winner, hero_name="", num_stars=0):
-    with open("save.txt", "a") as file:
-        if winner == "Hero":
-            file.write(f"Hero {hero_name} has killed a monster and gained {num_stars} stars.\n")
-        elif winner == "Monster":
-            file.write("Monster has killed the hero previously\n")
+# Lab 06 - Question 3 and 4
+#def save_game(winner, hero_name="", num_stars=0):
+#    with open("save.txt", "a") as file:
+#        if winner == "Hero":
+#            file.write(f"Hero {hero_name} has killed a monster and gained {num_stars} stars.\n")
+#        elif winner == "Monster":
+#            file.write("Monster has killed the hero previously\n")
+
+
+def save_game_v2(current_user):
+
+        # Collect dictionary of stats from user object
+        user_stats = current_user.return_stats()
+
+        # Save info to text file
+        with open("save.txt", "a") as file:
+            file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n")
+            
+            if user_stats["winner"] == "Monster":
+                file.write("Monster has killed the hero previously\n")
+                
+            print("Game saved to file successfully\n\n")
+
+
 
 
 def load_game():
@@ -149,3 +171,5 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
             print("    |    ... Increasing the hero's combat strength since you lost last time")
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
+
+

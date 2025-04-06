@@ -2,6 +2,45 @@ import random
 from explore_map import start_explore_map
 import functions
 
+<<<<<<< HEAD
+# Put all the functions into another file and import them
+import functions
+
+import user
+from user import User
+import stats
+
+current_user = None
+
+# ---------------------------------------------------------------   Main Menu
+print("\n1. Play Now!")
+print("2. Sign in")
+print("3. Create an account\n")
+menu_selection = str(input("Please select an option: [1, 2, 3]"))
+
+
+match menu_selection:
+    case "1":
+        print("\n[1] Play Now! ")
+        
+        # Create a guest user_object
+        current_user = User("Guest", "")
+        
+    case "2":
+        print("\n[2] Sign in")
+
+        # Assign user object returned by sign in function to current
+        current_user = functions.sign_in()
+
+    case "3":
+        print("\n[3] Create an account]")
+
+        # Assign user object returned by create account function to current
+        current_user = functions.create_account()
+        
+
+
+=======
 def get_valid_input(prompt, valid_range, error_message):
     """Handles input validation."""
     while True:
@@ -10,6 +49,7 @@ def get_valid_input(prompt, valid_range, error_message):
             return int(user_input)
         else:
             print(error_message)
+>>>>>>> origin/main
 
 def attack(attack_strength, health_points):
     """Simulates an attack on health points based on strength."""
@@ -35,7 +75,26 @@ def main_game():
     combat_strength = get_valid_input("Enter your combat Strength (1-6): ", range(1, 7), "Please enter a valid combat strength between 1 and 6.")
     m_combat_strength = get_valid_input("Enter the monster's combat Strength (1-6): ", range(1, 7), "Please enter a valid monster combat strength between 1 and 6.")
 
+<<<<<<< HEAD
+# Define the Monster's Powers
+monster_powers = {
+    "Fire Magic": 2,
+    "Freeze Time": 4,
+    "Super Hearing": 6
+}
+
+# Define the number of stars to award the player
+num_stars = 0
+
+# Loop to get valid input for Hero and Monster's Combat Strength
+i = 0
+
+input_invalid = True
+
+while input_invalid and i in range(5):
+=======
     # Weapon roll
+>>>>>>> origin/main
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Roll the dice for your weapon (Press enter)")
@@ -60,9 +119,24 @@ def main_game():
     combat_strength = min(6, combat_strength + weapon_roll)
     print("    |    The hero's weapon is " + str(weapons[weapon_roll - 1]))
 
+<<<<<<< HEAD
+    # Limit the combat strength to 6
+    combat_strength = min(6, (combat_strength + weapon_roll))
+    print("    |    The hero\'s weapon is " + str(weapons[weapon_roll - 1]))
+    
+    # Log weapon for stats
+    current_user.update_stats("weapon", str(weapons[weapon_roll - 1]))
+    
+
+    # Lab 06 - Question 5b
+    functions.adjust_combat_strength(combat_strength, m_combat_strength)
+
+    # Weapon Roll Analysis
+=======
     # Adjust combat strength
     functions.adjust_combat_strength(combat_strength, m_combat_strength)
 
+>>>>>>> origin/main
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Analyze the Weapon roll (Press enter)")
@@ -94,17 +168,37 @@ def main_game():
     print("    |", end="    ")
     input("Roll for first item (enter)")
 
+<<<<<<< HEAD
+    # Collect Loot First time
+    loot_options, belt = functions.collect_loot(loot_options, belt)
+
+
+    print("    ------------------------------------------------------------------")
+    print("    |", end="    ")
+    input("Roll for second item (Press enter)")
+
+    # Collect Loot Second time
+    loot_options, belt = functions.collect_loot(loot_options, belt)
+
+    # Log loot
+    current_user.update_stats("loot", belt[:])
+=======
     loot_options, belt = functions.collect_loot(loot_options, belt)
 
     print("    ------------------------------------------------------------------")
     print("    |", end="    ")
     input("Roll for second item (Press enter)")
     loot_options, belt = functions.collect_loot(loot_options, belt)
+>>>>>>> origin/main
 
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
     print("    |    Your belt: ", belt)
 
+<<<<<<< HEAD
+    # Use Loot
+=======
+>>>>>>> origin/main
     belt, health_points = functions.use_loot(belt, health_points)
 
     print("    ------------------------------------------------------------------")
@@ -173,6 +267,10 @@ def main_game():
             print("    |", end="    ")
             input("You strike (Press enter)")
             m_health_points = functions.hero_attacks(combat_strength, m_health_points)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
             if m_health_points == 0:
                 num_stars = 3
             else:
@@ -180,6 +278,10 @@ def main_game():
                 print("------------------------------------------------------------------")
                 input("    |    The monster strikes (Press enter)!!!")
                 health_points = functions.monster_attacks(m_combat_strength, health_points)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
                 if health_points == 0:
                     num_stars = 1
                 else:
@@ -188,6 +290,10 @@ def main_game():
             print("    |", end="    ")
             input("The Monster strikes (Press enter)")
             health_points = functions.monster_attacks(m_combat_strength, health_points)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
             if health_points == 0:
                 num_stars = 1
             else:
@@ -195,6 +301,10 @@ def main_game():
                 print("------------------------------------------------------------------")
                 input("The hero strikes!! (Press enter)")
                 m_health_points = functions.hero_attacks(combat_strength, m_health_points)
+<<<<<<< HEAD
+
+=======
+>>>>>>> origin/main
                 if m_health_points == 0:
                     num_stars = 3
                 else:
@@ -203,9 +313,22 @@ def main_game():
     # Determine winner and stars
     if(m_health_points <= 0):
         winner = "Hero"
+
+        # Log game winner and number of stars
+        current_user.update_stats("winner", winner)
+        current_user.update_stats("stars", num_stars)
+
     else:
         winner = "Monster"
 
+<<<<<<< HEAD
+        # Log game winner for stats
+        current_user.update_stats("winner", winner)
+        current_user.update_stats("stars", num_stars)
+
+
+=======
+>>>>>>> origin/main
     tries = 0
     input_invalid = True
     while input_invalid and tries in range(5):
@@ -227,8 +350,19 @@ def main_game():
     # Save the game
     if not input_invalid:
         stars_display = "*" * num_stars
+
+
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
+<<<<<<< HEAD
+
+        #functions.save_game(winner, hero_name=short_name, num_stars=num_stars) 
+
+        functions.save_game_v2(current_user)  
+
+        print("game saved successfully\n")   
+=======
         functions.save_game(winner, hero_name=short_name, num_stars=num_stars)
+>>>>>>> origin/main
 
 
 if __name__ == "__main__":

@@ -1,2 +1,8 @@
+<<<<<<< HEAD
+hero_name:admin | winner:Hero | stars:3 | weapon:Club | loot:Leather Boots, Flimsy Gloves;
+hero_name:Guest | winner:Monster | stars:1 | weapon:Nuclear Bomb | loot:Health Potion, Flimsy Gloves;
+Monster has killed the hero previously
+=======
 Monster has killed the hero previously
 Hero meo has killed a monster and gained 3 stars.
+>>>>>>> origin/main
