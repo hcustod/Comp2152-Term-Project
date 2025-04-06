@@ -1,5 +1,6 @@
 # Import the random library to use for the dice later
 import random
+import os
 
 # Will the line below print when you import function.py into main.py?
 # print("Inside function.py")
@@ -134,7 +135,6 @@ def inception_dream(num_dream_lvls):
         # 1 + 1 + 1 + 1 + 2
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
-
 # Lab 06 - Question 3 and 4
 def save_game(winner, hero_name="", num_stars=0):
     with open("save.txt", "a") as file:
@@ -154,7 +154,6 @@ def load_game():
                 print(last_line)
                 return last_line
     except FileNotFoundError:
-        print("No previous game found. Starting fresh.")
         return None
 
 # Lab 06 - Question 5b
@@ -172,5 +171,4 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
             print("    |    ... Increasing the hero's combat strength since you lost last time")
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
-
 
