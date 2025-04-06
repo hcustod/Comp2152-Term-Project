@@ -1,8 +1,6 @@
-# Import the random library to use for the dice later
-import random
+# function.py
 
-import user
-from user import User
+import random
 
 # Will the line below print when you import function.py into main.py?
 # print("Inside function.py")
@@ -49,7 +47,6 @@ def collect_loot(loot_options, belt):
     return loot_options, belt
 
 
-# Hero's Attack Function
 def hero_attacks(combat_strength, m_health_points):
     ascii_image = """
                                 @@   @@ 
@@ -62,40 +59,37 @@ def hero_attacks(combat_strength, m_health_points):
                @@@@@        @@       
                @    @@@@                
           @@@ @@                        
-       @@     @                         
+       @@     @                          
    @@*       @                          
    @        @@                          
            @@                                                    
          @   @@@@@@@                    
-        @            @                  
+        @            @                   
       @              @                  
 
   """
     print(ascii_image)
     print("    |    Player's weapon (" + str(combat_strength) + ") ---> Monster (" + str(m_health_points) + ")")
     if combat_strength >= m_health_points:
-        # Player was strong enough to kill monster in one blow
         m_health_points = 0
         print("    |    You have killed the monster")
     else:
-        # Player only damaged the monster
         m_health_points -= combat_strength
 
         print("    |    You have reduced the monster's health to: " + str(m_health_points))
     return m_health_points
 
 
-# Monster's Attack Function
 def monster_attacks(m_combat_strength, health_points):
     ascii_image2 = """                                                                 
-           @@@@ @                           
-      (     @*&@  ,                         
-    @               %                       
-     &#(@(@%@@@@@*   /                      
-      @@@@@.                                
+           @@@@ @                            
+      (     @*&@  ,                          
+    @               %                        
+     &#(@(@%@@@@@*   /                       
+      @@@@@.                                 
                @       /                    
-                %         @                 
-            ,(@(*/           %              
+                %         @                  
+            ,(@(*/           %               
                @ (  .@#                 @   
                           @           .@@. @
                    @         ,              
@@ -106,35 +100,22 @@ def monster_attacks(m_combat_strength, health_points):
     print(ascii_image2)
     print("    |    Monster's Claw (" + str(m_combat_strength) + ") ---> Player (" + str(health_points) + ")")
     if m_combat_strength >= health_points:
-        # Monster was strong enough to kill player in one blow
         health_points = 0
         print("    |    Player is dead")
     else:
-        # Monster only damaged the player
         health_points -= m_combat_strength
         print("    |    The monster has reduced Player's health to: " + str(health_points))
     return health_points
 
-# Recursion
-# You can choose to go crazy, but it will reduce your health points by 5
 def inception_dream(num_dream_lvls):
     num_dream_lvls = int(num_dream_lvls)
-    # Base Case
     if num_dream_lvls == 1:
         print("    |    You are in the deepest dream level now")
         print("    |", end="    ")
         input("Start to go back to real life? (Press Enter)")
         print("    |    You start to regress back through your dreams to real life.")
         return 2
-
-    # Recursive Case
     else:
-       # inception_dream(5)
-       # 1 + inception_dream(4)
-       # 1 + 1 + inception_dream(3)
-       # 1 + 1 + 1 + inception_dream(2)
-       # 1 + 1 + 1 + 1 + inception_dream(1)
-       # 1 + 1 + 1 + 1 + 2
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 
@@ -163,7 +144,7 @@ def save_game_v2(current_user):
 
 
 
-# Lab 06 - Question 5a
+
 def load_game():
     try:
         with open("save.txt", "r") as file:
@@ -177,9 +158,7 @@ def load_game():
         print("No previous game found. Starting fresh.")
         return None
 
-# Lab 06 - Question 5b
 def adjust_combat_strength(combat_strength, m_combat_strength):
-    # Lab Week 06 - Question 5 - Load the game
     last_game = load_game()
     if last_game:
         if "Hero" in last_game and "gained" in last_game:
@@ -194,81 +173,3 @@ def adjust_combat_strength(combat_strength, m_combat_strength):
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
 
 
-# Eric Laudrum:
-# Create an account file in accounts.txt
-def create_account():
-        global current_user
-   
-        # Wait until an accepted name has been submitted
-        accepted_name = False
-        while (not accepted_name):
-            
-            # Enter and Verify Username
-            print("What is your name hero?")
-            username = input("Please enter a name: ")
-
-            # Initialize user object (without password at first)
-            user_object = User(username, "")
-
-            # Check if username is available
-            if user_object.username_available():
-                break
-
-            print("That name is not available.\n")
-
-
-        # Enter Verify Password
-        password = input("Enter a password: ")
-        password_confirmation = input("Confirm your password: ")
-
-        # User successfully confirms password
-        if user_object.confirm_passwords_match(password, password_confirmation):
-            
-            # Assign password to user object
-            user_object.password = password
-
-            # Create a user account
-            user_object.create_user_account()
-            print("Account created.")
-
-            # Set the user object as the current user
-            current_user = user_object
-            print(f"Welcome {current_user.username}")
-        
-        else:
-            print("Error: Passwords do not match")
-
-        return current_user
-
-
-# Sign in function
-def sign_in():
-    global current_user
-    
-    signed_in = False
-
-    while not signed_in:
-        # Input sign in details
-        username = input("Enter a username: ")
-        password = input("Enter a password: ")
-
-        # Initialize user object
-        user_object = User(username, password)
-        print("user object created")
-
-        # Sign in successful
-        if user_object.verify_login(): 
-            
-            # Update global variable
-            current_user = user_object
-
-            signed_in = True
-
-            # Print Greeting and Stats
-            user_object.opening_stats()
-
-        # Sign in failed 
-        else:
-            print("Sign in failed. Try again!")
-
-    return current_user
