@@ -1,11 +1,11 @@
 import random
 from explore_map import start_explore_map
 import functions
+from functions import load_game, save_game
 from user import User
-import stats
 from partyGenerator.partyCreation import generate_party
 from fightSystem import run_combat
-from partyGenerator.models.monster import Monster
+from partyGenerator.models import Monster
 from dreamLevels import run_dream_levels
 
 current_user = None
@@ -36,6 +36,9 @@ def main_game():
     monster = Monster()
     belt = []
 
+    monsters_killed = load_game()
+    print(f"Total monsters killed so far: {monsters_killed}\n")
+
     for _ in range(2):
         _, belt = functions.collect_loot(loot_options, belt)
 
@@ -49,9 +52,6 @@ def main_game():
     input("Roll for second item (Press enter)")
     _, belt = functions.collect_loot(loot_options, belt)
 
-    # Belt again
-    belt.sort()
-    print("    |    Final belt: ", belt)
     current_user.update_stats("loot", belt[:])
     belt, first_hero.health_points = functions.use_loot(belt, first_hero.health_points)
 
@@ -169,6 +169,12 @@ def main_game():
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
         functions.save_game_v2(current_user)
         print("game saved successfully\n")
+
+    # TODO; evo
+    play_again = input("\nDo you want to fight again? (y/n): ").strip().lower()
+    if play_again != 'y':
+        save_game(monsters_killed)
+        print("Game saved. Goodbye!")
 
 
 if __name__ == "__main__":

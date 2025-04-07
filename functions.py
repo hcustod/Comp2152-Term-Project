@@ -43,7 +43,7 @@ def collect_loot(loot_options, belt):
     return loot_options, belt
 
 
-def hero_attacks(combat_strength, m_health_points):
+def hero_attacks(hero, combat_strength, m_health_points):
     ascii_image = """
                                 @@   @@ 
                                 @    @  
@@ -66,14 +66,28 @@ def hero_attacks(combat_strength, m_health_points):
   """
     print(ascii_image)
     print("    |    Player's weapon (" + str(combat_strength) + ") ---> Monster (" + str(m_health_points) + ")")
-    if combat_strength >= m_health_points:
+
+    if hasattr(hero, 'special_ability') and hero.special_ability:
+        chance = random.random()
+        if chance < 0.7:
+            damage = hero.combat_strength + 3
+            print("Hero uses evolved attack! Stronger attack!")
+        else:
+            damage = 0
+            print("Hero's evolved ability backfired!")
+    else:
+        damage = hero.combat_strength
+
+    if damage >= m_health_points:
         m_health_points = 0
         print("    |    You have killed the monster")
     else:
-        m_health_points -= combat_strength
-
+        m_health_points -= damage
         print("    |    You have reduced the monster's health to: " + str(m_health_points))
+
     return m_health_points
+
+
 
 
 def monster_attacks(m_combat_strength, health_points):
@@ -97,11 +111,12 @@ def monster_attacks(m_combat_strength, health_points):
     print("    |    Monster's Claw (" + str(m_combat_strength) + ") ---> Player (" + str(health_points) + ")")
     if m_combat_strength >= health_points:
         health_points = 0
-        print("    |    Player is dead")
+        print("    |    hero is dead")
     else:
         health_points -= m_combat_strength
         print("    |    The monster has reduced Player's health to: " + str(health_points))
     return health_points
+
 
 def inception_dream(num_dream_lvls):
     num_dream_lvls = int(num_dream_lvls)
@@ -127,6 +142,7 @@ def save_game_v2(current_user):
                 
             print("Game saved to file successfully\n\n")
 
+
 def load_game():
     try:
         with open("save.txt", "r") as file:
@@ -138,6 +154,22 @@ def load_game():
                 return last_line
     except FileNotFoundError:
         return None
+
+    # TODO; from evo branch
+def save_game(monsters_killed):
+    try:
+        with open("../game_save.txt", "w") as file:
+            file.write(str(monsters_killed) + "\n")
+    except Exception as e:
+        print(f"Error saving game: {e}")
+
+def load_game():
+    try:
+        with open("../game_save.txt", "r") as file:
+            return int(file.readline().strip())
+    except (FileNotFoundError, ValueError):
+        return 0
+    #TODO; ========
 
 def adjust_combat_strength(hero_str, monster_str):
     last_game = load_game()

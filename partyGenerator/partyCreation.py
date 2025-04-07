@@ -1,4 +1,4 @@
-from .models.hero import Hero
+from partyGenerator.models import Hero
 
 MAX_PARTY_SIZE = 3
 

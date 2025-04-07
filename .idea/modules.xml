@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Comp2152-Term-Project.iml" filepath="$PROJECT_DIR$/.idea/Comp2152-Term-Project.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/UPDATED2.iml" filepath="$PROJECT_DIR$/.idea/UPDATED2.iml" />
+>>>>>>> origin/character-evolutions
     </modules>
   </component>
 </project>
