@@ -1,5 +1,5 @@
 import random
-from character import Character
+from partyGenerator.models.character import Character
 
 
 class Monster(Character):
@@ -25,4 +25,3 @@ class Monster(Character):
 
     def __del__(self):
         super().__del__()
-        print("The Monster object is being destroyed by the garbage collector.")

@@ -1,7 +1,5 @@
 admin::admin
-<<<<<<< HEAD
-=======
 Hank::password
 hank::password
 rico::password
->>>>>>> merge-party-account-explore-evo
+Bob::Password

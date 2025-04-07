@@ -2,10 +2,6 @@ import random
 from user import User
 import os
 
-# Will the line below print when you import function.py into main.py?
-# print("Inside function.py")
-
-
 def use_loot(belt, health_points):
     good_loot_options = ["Health Potion", "Leather Boots"]
     bad_loot_options = ["Poison Potion"]
@@ -134,45 +130,56 @@ def inception_dream(num_dream_lvls):
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 
-def save_game_v2(current_user):
-        # Collect dictionary of stats from user object
-        user_stats = current_user.return_stats()
-        # Save info to text file
-        with open("save.txt", "a") as file:
-            file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n")
+# def save_game_v2(current_user):
+#        # Collect dictionary of stats from user object
+#        user_stats = current_user.return_stats()
+#        # Save info to text file
+#        with open("save.txt", "a") as file:
+#           file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n")
             
-            if user_stats["winner"] == "Monster":
-                file.write("Monster has killed the hero previously\n")
+#            if user_stats["winner"] == "Monster":
+#                file.write("Monster has killed the hero previously\n")
                 
-            print("Game saved to file successfully\n\n")
+#           print("Game saved to file successfully\n\n")
 
+
+#def load_game():
+ #   try:
+   #     with open("save.txt", "r") as file:
+  #          print("    |    Loading from saved file ...")
+     #       lines = file.readlines()
+    #        if lines:
+     #           last_line = lines[-1].strip()
+       #         print(last_line)
+      #          return last_line
+#    except FileNotFoundError:
+#        return None
+
+def save_game_all(current_user, monsters_killed):
+    user_stats = current_user.return_stats()
+    with open("save.txt", "a") as file:
+        file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n"
+                   f"monsters_killed:{monsters_killed}"
+                   )
+        if user_stats['winner'] == "Monster":
+            file.write("Monster has killed the hero previously\n")
+    print("Game saved to file successfully\n\n")
 
 def load_game():
     try:
         with open("save.txt", "r") as file:
             print("    |    Loading from saved file ...")
             lines = file.readlines()
-            if lines:
-                last_line = lines[-1].strip()
-                print(last_line)
-                return last_line
-    except FileNotFoundError:
-        return None
 
-
-def save_game(monsters_killed):
-    try:
-        with open("../game_save.txt", "w") as file:
-            file.write(str(monsters_killed) + "\n")
-    except Exception as e:
-        print(f"Error saving game: {e}")
-
-def load_game():
-    try:
-        with open("../game_save.txt", "r") as file:
-            return int(file.readline().strip())
+            for line in reversed(lines):
+                if "monsters_killed" in line:
+                    parts = line.strip().split(":")
+                    if len(parts) >= 2 and parts[0] == "monsters_killed":
+                        return int(parts[1].strip())
     except (FileNotFoundError, ValueError):
-        return 0
+        pass
+
+    return 0
 
 
 def adjust_combat_strength(hero_str, monster_str):
@@ -202,7 +209,7 @@ def create_account():
         while (not accepted_name):
             
             # Enter and Verify Username
-            print("What is your name hero?")
+            print("What is your name friend?")
             username = input("Please enter a name: ")
 
             # Initialize user object (without password at first)

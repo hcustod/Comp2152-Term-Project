@@ -1,6 +1,6 @@
 from partyGenerator.signs import assign_random_sign
 from partyGenerator.species import get_random_species
-from character import Character
+from partyGenerator.models.character import Character
 import random
 
 class Hero(Character):
@@ -41,5 +41,4 @@ class Hero(Character):
         self.level += 1
 
     def __del__(self):
-        print("The Hero object is being destroyed by the garbage collector.")
         super().__del__()

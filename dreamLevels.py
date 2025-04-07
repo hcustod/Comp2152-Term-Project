@@ -1,3 +1,4 @@
+# Run dream levels script
 def run_dream_levels(party, monster):
     while True:
         try:
@@ -20,6 +21,6 @@ def run_dream_levels(party, monster):
         for hero in party:
             hero.health_points = max(0, hero.health_points - num_dream_lvls)
         monster.health_points += num_dream_lvls
-        print(f"\nYou descend {num_dream_lvls} dream level(s). All heroes lose {num_dream_lvls} HP. Monster gains {num_dream_lvls} HP.")
+        print(f"\n   | You descend {num_dream_lvls} dream level(s). All heroes lose {num_dream_lvls} HP. Monster gains {num_dream_lvls} HP.")
 
     return num_dream_lvls

@@ -22,4 +22,4 @@ class Character:
         self._health_points = max(0, value)
 
     def __del__(self):
-        print("Character object destroyed.")
+        return 1

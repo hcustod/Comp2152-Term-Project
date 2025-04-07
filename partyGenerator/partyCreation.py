@@ -5,6 +5,7 @@ MAX_PARTY_SIZE = 3
 def generate_party():
     while True:
         party = []
+        print("**************************************************************************************")
         print("\nWelcome to Party Creation!")
 
         # Robust input validation for party size

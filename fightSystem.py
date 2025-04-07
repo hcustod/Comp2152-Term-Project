@@ -3,6 +3,7 @@ import functions
 
 small_dice = list(range(1, 7))
 
+# Run combat script
 def run_combat(party, monster, belt, monsters_killed=0):
     print("    ------------------------------------------------------------------")
     print("    |    You meet the monster. FIGHT!!")
@@ -18,6 +19,7 @@ def run_combat(party, monster, belt, monsters_killed=0):
     party_turn = party_roll >= monster_roll
     print("    |    Party strikes first!" if party_turn else "    |    Monster strikes first!")
 
+    # Main battle loop; checks to see if characters are alive, uses functions.hero_attacks, and changes turns
     while monster.health_points > 0 and any(hero.health_points > 0 for hero in party):
         if party_turn:
             for hero in [h for h in party if h.health_points > 0]:
@@ -45,7 +47,7 @@ def run_combat(party, monster, belt, monsters_killed=0):
                 input(f"Monster strikes {target.name}! (Press Enter)")
                 damage = monster.combat_strength
                 target.health_points = max(0, target.health_points - damage)
-                print(f"{target.name} took {damage} damage. HP is now {target.health_points}")
+                print(f"   | {target.name} took {damage} damage. HP is now {target.health_points}")
 
                 if target.health_points == 0:
                     monster.survivals.append("survived")
@@ -73,7 +75,7 @@ def run_combat(party, monster, belt, monsters_killed=0):
 
     return winner, num_stars, monsters_killed
 
-
+# Display statuses template
 def display_status(hero, monster):
     print("\n   === Evolution Status ===")
     print(f"    Hero - Name: {hero.name}, Level: {hero.level}, Combat Strength: {hero.combat_strength}, Special Ability: {'Yes' if hero.special_ability else 'No'}")

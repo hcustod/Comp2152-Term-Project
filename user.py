@@ -51,7 +51,7 @@ class User:
             
             # Iterate through account file
             for line in file.readlines():
-                print(f"line.strip(): {line.strip()}\n")
+                # print(f"line.strip(): {line.strip()}\n")
 
                 # Collect the first position of [username, password]
                 username_on_file = line.strip().split("::")[0]
@@ -81,7 +81,7 @@ class User:
             print("Error: Accounts could not be found.")
             return False
         
-        # Open and iterate through the acocunts file
+        # Open and iterate through the accounts file
         with open("accounts.txt", "r") as file:
         
             for line in file.readlines():
@@ -145,6 +145,8 @@ class User:
         with open("save.txt", "r") as file:
             # Read one file entry
             for line in file.readlines():
+
+                # For debug only
                 #print("line in save.txt: ", line.strip())
 
                 # Verify it is a line that carries stats

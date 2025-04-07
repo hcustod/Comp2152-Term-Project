@@ -1,14 +1,13 @@
 import random
 from explore_map import start_explore_map
 import functions
-from functions import load_game, save_game
+from functions import load_game
 from user import User
 from partyGenerator.partyCreation import generate_party
 from fightSystem import run_combat
 from partyGenerator.models import Monster
 from dreamLevels import run_dream_levels
 
-current_user = None
 
 small_dice_options = list(range(1, 7))
 big_dice_options = list(range(1, 21))
@@ -19,7 +18,6 @@ monster_powers = { "Fire Magic": 2, "Freeze Time": 4, "Super Hearing": 6 }
 
 
 def get_valid_input(prompt, valid_range, error_message):
-    """Handles input validation."""
     while True:
         user_input = input(prompt)
         if user_input.isdigit() and int(user_input) in valid_range:
@@ -28,15 +26,16 @@ def get_valid_input(prompt, valid_range, error_message):
             print(error_message)
 
 
-def main_game():
-    global current_user
+def main_game(current_user):
+
     global loot_options
     party = generate_party()
     first_hero = party[0]
     monster = Monster()
     belt = []
 
-    monsters_killed = load_game()
+    monsters_killed = functions.load_game()
+
     print(f"Total monsters killed so far: {monsters_killed}\n")
 
     for _ in range(2):
@@ -47,9 +46,9 @@ def main_game():
     print("    ------------------------------------------------------------------")
     print("    |    !!You find a loot bag!! You look inside to find 2 items:")
     print("    |", end="    ")
-    input("Roll for first item (Press enter)")
+    input("    | Roll for first item (Press enter)")
     _, belt = functions.collect_loot(loot_options, belt)
-    input("Roll for second item (Press enter)")
+    input("    | Roll for second item (Press enter)")
     _, belt = functions.collect_loot(loot_options, belt)
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
@@ -78,7 +77,8 @@ def main_game():
     weapon_roll = random.choice(small_dice_options)
     weapon_name = weapons[weapon_roll - 1]
 
-    first_hero.combat_strength = min(6, first_hero.combat_strength + weapon_roll)
+    # Only the first hero will get the weapon.
+    first_hero.combat_strength = min(first_hero.combat_strength + weapon_roll, 6)
     print("    |    The hero's weapon is " + weapon_name)
     print("    |    Hero's combat strength is now", first_hero.combat_strength)
 
@@ -86,7 +86,7 @@ def main_game():
     current_user.update_stats("weapon", weapon_name)
 
     # Analyze weapon roll
-    input("Analyze the Weapon roll (Press enter)")
+    input("    | Analyze the Weapon roll (Press enter)")
     print("    |", end="    ")
     if weapon_name == "Fist":
         print("    |    --- Oh no... you rolled the Fist.")
@@ -147,63 +147,17 @@ def main_game():
     # Start combat
     winner, num_stars, monsters_killed = run_combat(party, monster, belt)
 
+    # Removed how stars were saved from lab here due to conflicts w new save system.
+
+    # Post combat updates
     current_user.update_stats("winner", winner)
     current_user.update_stats("stars", num_stars)
 
-    # TODO; does not seem implemented the best
-    # Saving the game and scoring
-    tries = 0
-    input_invalid = True
-    while input_invalid and tries < 5:
-        print("    |", end="    ")
-        hero_name = input("Enter your Hero's name (in two words)")
-        name = hero_name.split()
-        if len(name) != 2 or not all(part.isalpha() for part in name):
-            print("    |    Please enter an alphabetical name with two parts")
-            tries += 1
-        else:
-            short_name = name[0][:2] + name[1][0]
-            print("    |    I'm going to call you " + short_name + " for short")
-            input_invalid = False
-
-    if not input_invalid:
-        stars_display = "*" * num_stars
-
-
-        print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
-
-
-
-        functions.save_game(monsters_killed)
-        functions.save_game_v2(current_user)
-        print("game saved successfully\n")
-
-
-    play_again = input("\nDo you want to fight again? (y/n): ").strip().lower()
-    if play_again != 'y':
-        save_game(monsters_killed)
-        print("Game saved. Goodbye!")
-
+    functions.save_game_all(current_user, monsters_killed)
 
 
 if __name__ == "__main__":
-    print("\n1. Play Now!")
-    print("2. Sign in")
-    print("3. Create an account\n")
-    menu_selection = str(input("Please select an option: [1, 2, 3]"))
 
-    match menu_selection:
-        case "1":
-            print("\n[1] Play Now! ")
-            current_user = User("Guest", "")
-
-        case "2":
-            print("\n[2] Sign in")
-            current_user = functions.sign_in()
-
-        case "3":
-            print("\n[3] Create an account")
-            current_user = functions.create_account()
     print(r"""**************************************************************************************
 
      ____                             _   _                                     
@@ -213,6 +167,27 @@ if __name__ == "__main__":
     |____/|_|  \___|\__,_|_| |_| |_| |_| |_|\__,_|_| |_| |_|_| |_| |_|\___|_|      
 
 **************************************************************************************""")
+
+    print("\n1. Play Now!")
+    print("2. Sign in")
+    print("3. Create an account\n")
+    menu_selection = str(input("Please select an option [1, 2, 3]: "))
+
+    match menu_selection:
+        case "1":
+            current_user = User("Guest", "")
+
+        case "2":
+            current_user = functions.sign_in()
+
+        case "3":
+            current_user = functions.create_account()
+
+    # Debug for current_user not being created
+    if not current_user:
+        print("Failed to create a user.")
+        exit(1)
+
     while True:
 
         print("\n=== Main Menu ===")
@@ -221,7 +196,7 @@ if __name__ == "__main__":
         print("3. Exit")
         choice = input("Enter your choice: ")
         if choice == "1":
-            main_game()
+            main_game(current_user)
         elif choice == "2":
             start_explore_map()
         elif choice == "3":
