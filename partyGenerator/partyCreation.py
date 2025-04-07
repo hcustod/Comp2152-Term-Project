@@ -64,7 +64,6 @@ def generate_party():
     return party
 
 
-
 def apply_bonuses(hero):
     hp = hero.health_points
     str_ = hero.combat_strength
