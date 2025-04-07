@@ -148,7 +148,7 @@ class User:
                 #print("line in save.txt: ", line.strip())
 
                 # Verify it is a line that carries stats
-                if "Monster has killed" in line:
+                if not ("hero_name:" in line) and not ("winner:" in line):
                     continue
                     
                 # Initialize an empty dictionary to hold user_stats
@@ -159,7 +159,6 @@ class User:
                     
                     # Split the categories into key and value
                     item = category.split(":")
-
                     item_key = item[0].strip()
                     item_value = item[1].strip()
 
