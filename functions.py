@@ -159,7 +159,7 @@ def load_game():
     except FileNotFoundError:
         return None
 
-    # TODO; from evo branch
+
 def save_game(monsters_killed):
     try:
         with open("../game_save.txt", "w") as file:
@@ -173,7 +173,7 @@ def load_game():
             return int(file.readline().strip())
     except (FileNotFoundError, ValueError):
         return 0
-    #TODO; ========
+
 
 def adjust_combat_strength(hero_str, monster_str):
     last_game = load_game()

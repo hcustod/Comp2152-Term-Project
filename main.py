@@ -173,13 +173,12 @@ def main_game():
         print("    |    Hero " + short_name + " gets <" + stars_display + "> stars")
 
 
-        functions.save_game_v2(current_user)
-        print("game saved successfully\n")   
-        functions.save_game(winner, hero_name=short_name, num_stars=num_stars)
+
+        functions.save_game(monsters_killed)
         functions.save_game_v2(current_user)
         print("game saved successfully\n")
 
-    # TODO; evo
+
     play_again = input("\nDo you want to fight again? (y/n): ").strip().lower()
     if play_again != 'y':
         save_game(monsters_killed)
