@@ -146,7 +146,7 @@ def main_game():
         _ = functions.inception_dream(num_dream_lvls)
 
     # Start combat
-    _, num_stars = run_combat(party, monster, belt)
+    _, num_stars, monsters_killed = run_combat(party, monster, belt)
 
     # TODO; does not seem implemented the best
     # Saving the game and scoring
