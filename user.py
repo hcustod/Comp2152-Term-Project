@@ -177,60 +177,59 @@ class User:
                     elif(user_stats['winner'] == 'Monster'):
                         losses += 1
 
-
-        #print(f"wins: {wins}")
-        #print(f"losses: {losses}")
-        #print(f"stars: {stars}")
-
         hero_intro = f"Introducing.....\n"
 
-        # User has a winning record
-        if(wins > losses):
-            if(losses >= 0 and losses < 4):
-                
-                hero_intro += ", a new Hero to the group looking to make their mark. It's... "
-            elif(losses >= 4 and losses < 10):
-                hero_intro += ", the Hero other Heroes have said to look out for as up and coming.. "
+       
+        if(wins + losses == 0):
+            hero_intro += ", a brand new contender has entered the arena."
+             
+        else:
+            # User has a winning record
+            if(wins > losses):
+                if(losses >= 0 and losses < 4):
+                    
+                    hero_intro += ", a new Hero to the group looking to make their mark. It's... "
+                elif(losses >= 4 and losses < 10):
+                    hero_intro += ", the Hero other Heroes have said to look out for as up and coming.. "
+                else:
+                    hero_intro += ", your Hero's favourite Hero, the lengendary.... "
+            elif(wins <= losses):
+                if(losses < 3):
+                    hero_intro += ", a new Hero who can dish it out as well as they can take it. It's... "
+                elif(losses >= 3 and losses < 6):
+                    hero_intro += ", a Hero with something to prove.."
+                elif(losses >= 6 and losses < 10):
+                    hero_intro += ", a scrappy young vet who's never THAT down and out. It's..."
+                else:
+                    hero_intro += ", the great equalizer.... It's.. "
+
+
+            if(self.username == 'Guest'):
+                hero_intro = "representing all the people who don't feel comfortable\n sharing their personal information with us.... it's "
+
+            games_played = wins+losses
+            if(games_played >= 1):
+                win_loss_percent = wins / games_played * 100
+                avg_stars = stars / games_played * 100
+
+
+                print("====================================================================")
+                print(f"                          {self.username}")
+                print("====================================================================")
+
+                print(f"{hero_intro}{self.username}")
+
+                print(f"\nTotal wins: {wins}")
+                print(f"Total losses: {losses}")
+                print(f"Win/Loss {win_loss_percent}%") 
+
+                print(f"Total stars: {stars}")
+                print(f"Average stars: {avg_stars}")
+
+                print("====================================================================")
+
             else:
-                hero_intro += ", your Hero's favourite Hero, the lengendary.... "
-
-
-
-        elif(losses == wins):
-            if(losses < 3):
-                hero_intro += ", a new Hero who can dish it out as well as they can take it. It's... "
-            elif(losses >= 3 and losses < 6):
-                hero_intro += ", a Hero with something to prove.."
-            elif(losses >= 6 and losses < 10):
-                hero_intro += ", a scrappy young vet who's never THAT down and out. It's..."
-            else:
-                hero_intro += ", the great equalizer.... It's.. "
-
-
-        if(self.username == 'Guest'):
-            hero_intro = "representing all the people who don't feel comfortable\n sharing their personal information with us.... it's "
-
-        if(wins+losses > 0):
-            win_loss_percent = wins / (wins+losses) * 100
-            avg_stars = stars / (wins+losses) * 100
-
-
-        print("====================================================================")
-        print(f"                          {self.username}")
-        print("====================================================================")
-
-        print(f"{hero_intro}{self.username}")
-
-        print(f"\nTotal wins: {wins}")
-        print(f"Total losses: {losses}")
-        print(f"Win/Loss {win_loss_percent:.2f}%") # remove decimal place 
-
-        print(f"Total stars: {stars}")
-        print(f"Average stars: {stars:.2f}") # remove decimal place
-
-        print("====================================================================")
-
-
+                print("You will have stats available next game.")
             
                     
                 

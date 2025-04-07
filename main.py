@@ -154,7 +154,7 @@ def main_game(current_user):
     current_user.update_stats("stars", num_stars)
 
     functions.save_game_all(current_user, monsters_killed)
-
+    
 
 if __name__ == "__main__":
 

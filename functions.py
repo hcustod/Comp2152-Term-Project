@@ -163,6 +163,13 @@ def save_game_all(current_user, monsters_killed):
                    )
         if user_stats['winner'] == "Monster":
             file.write("Monster has killed the hero previously\n")
+
+            # Reset user stats
+            current_user.stats['weapon'] = ""
+            current_user.stats['loot'] = []    
+            current_user.stats['stars'] = ""
+            current_user.stats['winner'] = ""
+
     print("Game saved to file successfully\n\n")
 
 def load_game():
