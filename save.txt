@@ -12,3 +12,5 @@ hero_name:admin | winner:Hero | stars:3 | weapon:Club | loot:Leather Boots, Flim
 hero_name:hank | winner:Hero | stars:3 | weapon:Bomb | loot:Health Potion, Poison Potion;
 hero_name:Guest | winner: | stars: | weapon:Club | loot:Flimsy Gloves, Health Potion;
 >>>>>>> merge-party-account-explore-evo
+hero_name:Guest | winner:Monster | stars:0 | weapon:Fist | loot:Flimsy Gloves, Leather Boots;
+Monster has killed the hero previously

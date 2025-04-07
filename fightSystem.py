@@ -75,8 +75,8 @@ def run_combat(party, monster, belt, monsters_killed=0):
 
 
 def display_status(hero, monster):
-    print("\n=== Evolution Status ===")
-    print(f"Hero - Level: {hero.level}, Combat Strength: {hero.combat_strength}, Special Ability: {'Yes' if hero.special_ability else 'No'}")
-    print(f"Monster - Level: {monster.level}, Combat Strength: {monster.combat_strength}, Evolved: {'Yes' if monster.evolved else 'No'}")
-    print("========================\n")
+    print("\n   === Evolution Status ===")
+    print(f"    Hero - Name: {hero.name}, Level: {hero.level}, Combat Strength: {hero.combat_strength}, Special Ability: {'Yes' if hero.special_ability else 'No'}")
+    print(f"    Monster - Level: {monster.level}, Combat Strength: {monster.combat_strength}, Evolved: {'Yes' if monster.evolved else 'No'}")
+    print("     ========================\n")
 
