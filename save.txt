@@ -1,3 +1,8 @@
-
 hero_name:Bob | winner:Monster | stars:0 | weapon:Club | loot:Flimsy Gloves, Health Potion;
+monsters_killed:0Monster has killed the hero previously
+hero_name:admin | winner:Monster | stars:0 | weapon:Knife | loot:Flimsy Gloves, Leather Boots;
+monsters_killed:0Monster has killed the hero previously
+hero_name:admin | winner:Monster | stars:0 | weapon:Club | loot:Flimsy Gloves, Leather Boots;
+monsters_killed:0Monster has killed the hero previously
+hero_name:admin | winner:Monster | stars:0 | weapon:Fist | loot:Health Potion, Leather Boots;
 monsters_killed:0Monster has killed the hero previously
