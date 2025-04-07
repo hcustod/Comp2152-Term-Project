@@ -1,12 +1,8 @@
-# explore_map.py
 
-import random
-
-# Define locations that the player can explore
 locations = ['Town', 'Forest', 'Cave']
 
 def start_explore_map():
-    """Function to start exploring the map and choose a location."""
+
     print("\n=== Map Exploration ===")
     print("Choose a location to explore:")
 
@@ -27,7 +23,6 @@ def start_explore_map():
         print("Invalid choice. Please choose a valid location.")
 
 def handle_location_event(location):
-    """Handle events that occur based on the location."""
     if location == 'Town':
         print("You find a bustling town with shops and people selling goods.")
     elif location == 'Forest':

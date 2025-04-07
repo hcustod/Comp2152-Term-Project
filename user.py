@@ -192,7 +192,8 @@ class User:
             else:
                 hero_intro += ", your Hero's favourite Hero, the lengendary.... "
 
-        # User has even winning record
+
+
         elif(losses == wins):
             if(losses < 3):
                 hero_intro += ", a new Hero who can dish it out as well as they can take it. It's... "
@@ -203,20 +204,6 @@ class User:
             else:
                 hero_intro += ", the great equalizer.... It's.. "
 
-        # User as losing record
-        elif(wins < losses):
-            if(losses >= 0 and losses < 3):
-                hero_intro += " you know what, I honestly haven't bothered to learn their name..\nWhat did you say it was? Oh right, it's "
-            elif(losses >= 3 and losses < 6):
-                hero_intro += ", you know him as Monster food, but he keeps coming back! It's.. "
-            elif(losses >= 6 and losses < 10):
-                hero_intro += ", he's not very good but we still support him when we can. It's.. "
-            else:
-                hero_intro += ", how are you still alive!? Are you sure you want to do this "
-        else:
-            hero_intro += " , a very mysterious hero.."
-
-            
 
         if(self.username == 'Guest'):
             hero_intro = "representing all the people who don't feel comfortable\n sharing their personal information with us.... it's "
@@ -224,7 +211,6 @@ class User:
         if(wins+losses > 0):
             win_loss_percent = wins / (wins+losses) * 100
             avg_stars = stars / (wins+losses) * 100
-
 
 
         print("====================================================================")

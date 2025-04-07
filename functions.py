@@ -1,6 +1,6 @@
-# function.py
-
 import random
+from user import User
+import os
 
 # Will the line below print when you import function.py into main.py?
 # print("Inside function.py")
@@ -47,7 +47,7 @@ def collect_loot(loot_options, belt):
     return loot_options, belt
 
 
-def hero_attacks(combat_strength, m_health_points):
+def hero_attacks(hero, combat_strength, m_health_points):
     ascii_image = """
                                 @@   @@ 
                                 @    @  
@@ -70,14 +70,28 @@ def hero_attacks(combat_strength, m_health_points):
   """
     print(ascii_image)
     print("    |    Player's weapon (" + str(combat_strength) + ") ---> Monster (" + str(m_health_points) + ")")
-    if combat_strength >= m_health_points:
+
+    if hasattr(hero, 'special_ability') and hero.special_ability:
+        chance = random.random()
+        if chance < 0.7:
+            damage = hero.combat_strength + 3
+            print("Hero uses evolved attack! Stronger attack!")
+        else:
+            damage = 0
+            print("Hero's evolved ability backfired!")
+    else:
+        damage = hero.combat_strength
+
+    if damage >= m_health_points:
         m_health_points = 0
         print("    |    You have killed the monster")
     else:
-        m_health_points -= combat_strength
-
+        m_health_points -= damage
         print("    |    You have reduced the monster's health to: " + str(m_health_points))
+
     return m_health_points
+
+
 
 
 def monster_attacks(m_combat_strength, health_points):
@@ -101,11 +115,12 @@ def monster_attacks(m_combat_strength, health_points):
     print("    |    Monster's Claw (" + str(m_combat_strength) + ") ---> Player (" + str(health_points) + ")")
     if m_combat_strength >= health_points:
         health_points = 0
-        print("    |    Player is dead")
+        print("    |    hero is dead")
     else:
         health_points -= m_combat_strength
         print("    |    The monster has reduced Player's health to: " + str(health_points))
     return health_points
+
 
 def inception_dream(num_dream_lvls):
     num_dream_lvls = int(num_dream_lvls)
@@ -119,20 +134,9 @@ def inception_dream(num_dream_lvls):
         return 1 + int(inception_dream(num_dream_lvls - 1))
 
 
-# Lab 06 - Question 3 and 4
-#def save_game(winner, hero_name="", num_stars=0):
-#    with open("save.txt", "a") as file:
-#        if winner == "Hero":
-#            file.write(f"Hero {hero_name} has killed a monster and gained {num_stars} stars.\n")
-#        elif winner == "Monster":
-#            file.write("Monster has killed the hero previously\n")
-
-
 def save_game_v2(current_user):
-
         # Collect dictionary of stats from user object
         user_stats = current_user.return_stats()
-
         # Save info to text file
         with open("save.txt", "a") as file:
             file.write(f"hero_name:{current_user.username} | winner:{user_stats['winner']} | stars:{user_stats['stars']} | weapon:{user_stats['weapon']} | loot:{user_stats['loot'][0]}, {user_stats['loot'][1]};\n")
@@ -141,8 +145,6 @@ def save_game_v2(current_user):
                 file.write("Monster has killed the hero previously\n")
                 
             print("Game saved to file successfully\n\n")
-
-
 
 
 def load_game():
@@ -155,21 +157,117 @@ def load_game():
                 print(last_line)
                 return last_line
     except FileNotFoundError:
-        print("No previous game found. Starting fresh.")
         return None
 
-def adjust_combat_strength(combat_strength, m_combat_strength):
+    # TODO; from evo branch
+def save_game(monsters_killed):
+    try:
+        with open("../game_save.txt", "w") as file:
+            file.write(str(monsters_killed) + "\n")
+    except Exception as e:
+        print(f"Error saving game: {e}")
+
+def load_game():
+    try:
+        with open("../game_save.txt", "r") as file:
+            return int(file.readline().strip())
+    except (FileNotFoundError, ValueError):
+        return 0
+    #TODO; ========
+
+def adjust_combat_strength(hero_str, monster_str):
     last_game = load_game()
     if last_game:
         if "Hero" in last_game and "gained" in last_game:
             num_stars = int(last_game.split()[-2])
             if num_stars > 3:
                 print("    |    ... Increasing the monster's combat strength since you won so easily last time")
-                m_combat_strength += 1
+                monster_str += 1
         elif "Monster has killed the hero" in last_game:
-            combat_strength += 1
+            hero_str += 1
             print("    |    ... Increasing the hero's combat strength since you lost last time")
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
 
+
+    return hero_str, monster_str
+
+# Eric Laudrum:
+# Create an account file in accounts.txt
+def create_account():
+        global current_user
+   
+        # Wait until an accepted name has been submitted
+        accepted_name = False
+        while (not accepted_name):
+            
+            # Enter and Verify Username
+            print("What is your name hero?")
+            username = input("Please enter a name: ")
+
+            # Initialize user object (without password at first)
+            user_object = User(username, "")
+
+            # Check if username is available
+            if user_object.username_available():
+                break
+
+            print("That name is not available.\n")
+
+
+        # Enter Verify Password
+        password = input("Enter a password: ")
+        password_confirmation = input("Confirm your password: ")
+
+        # User successfully confirms password
+        if user_object.confirm_passwords_match(password, password_confirmation):
+            
+            # Assign password to user object
+            user_object.password = password
+
+            # Create a user account
+            user_object.create_user_account()
+            print("Account created.")
+
+            # Set the user object as the current user
+            current_user = user_object
+            print(f"Welcome {current_user.username}")
+        
+        else:
+            print("Error: Passwords do not match")
+
+        return current_user
+
+
+# Sign in function
+def sign_in():
+    global current_user
+    
+    signed_in = False
+
+    while not signed_in:
+        # Input sign in details
+        username = input("Enter a username: ")
+        password = input("Enter a password: ")
+
+        # Initialize user object
+        user_object = User(username, password)
+        print("user object created")
+
+        # Sign in successful
+        if user_object.verify_login(): 
+            
+            # Update global variable
+            current_user = user_object
+
+            signed_in = True
+
+            # Print Greeting and Stats
+            user_object.opening_stats()
+
+        # Sign in failed 
+        else:
+            print("Sign in failed. Try again!")
+
+    return current_user
 
