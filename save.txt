@@ -12,3 +12,5 @@ hero_name:admin | winner:Monster | stars:0 | weapon:Knife | loot:Flimsy Gloves, 
 monsters_killed:0Monster has killed the hero previously
 hero_name:admin | winner:Monster | stars:0 | weapon:Bomb | loot:Flimsy Gloves, Leather Boots;
 monsters_killed:0Monster has killed the hero previously
+hero_name:Guest | winner:Monster | stars:0 | weapon:Fist | loot:Flimsy Gloves, Health Potion;
+monsters_killed:0Monster has killed the hero previously

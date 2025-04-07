@@ -45,10 +45,9 @@ def main_game(current_user):
     # Loot bag
     print("    ------------------------------------------------------------------")
     print("    |    !!You find a loot bag!! You look inside to find 2 items:")
-    print("    |", end="    ")
-    input("    | Roll for first item (Press enter)")
+    input("    |    Roll for first item (Press enter)")
     _, belt = functions.collect_loot(loot_options, belt)
-    input("    | Roll for second item (Press enter)")
+    input("    |    Roll for second item (Press enter)")
     _, belt = functions.collect_loot(loot_options, belt)
     print("    |    You're super neat, so you organize your belt alphabetically:")
     belt.sort()
@@ -98,11 +97,11 @@ def main_game(current_user):
     if weapon_name != "Fist":
         print("    |    --- Thank goodness you didn't roll the Fist...")
     if weapon_roll <= 2:
-        print("--- You rolled a weak weapon, friend")
+        print("    |    --- You rolled a weak weapon, friend")
     elif weapon_roll <= 4:
-        print("--- Your weapon is meh")
+        print("    |    --- Your weapon is meh")
     else:
-        print("--- Nice weapon, friend!")
+        print("    |    --- Nice weapon, friend!")
 
     # Monster magic roll
     print("    |", end="    ")
@@ -132,7 +131,7 @@ def main_game(current_user):
 
     # Analyze monster vs character
     input("Analyze the roll (Press enter)")
-    print("    |    You are matched in strength: " + str(monster.combat_strength == first_hero.combat_strength))
+    print("\n    |    You are matched in strength: " + str(monster.combat_strength == first_hero.combat_strength))
     print("    |    You have a strong first hero: " + str((first_hero.combat_strength + first_hero.health_points) >= 15))
     print("    |", end="    ")
 

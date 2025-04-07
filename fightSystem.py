@@ -50,6 +50,7 @@ def run_combat(party, monster, belt, monsters_killed=0):
                 print(f"   | {target.name} took {damage} damage. HP is now {target.health_points}")
 
                 if target.health_points == 0:
+                    print(f"   | {target.name} has fallen in battle...")
                     monster.survivals.append("survived")
                     recent_survivals = [s for s in monster.survivals[-3:] if s == "survived"]
                     if len(recent_survivals) >= 2 and not monster.evolved:
@@ -68,17 +69,19 @@ def run_combat(party, monster, belt, monsters_killed=0):
     heroes_alive = [h for h in party if h.health_points > 0]
 
     if winner == "Heroes":
+        print("Victory! Our heroes have killed the monster!")
         monsters_killed += 1
         num_stars = 3 if len(heroes_alive) == len(party) else 2 if heroes_alive else 1
     else:
+        print("Defeated! The monster killed our heroes!")
         num_stars = 0
 
     return winner, num_stars, monsters_killed
 
 # Display statuses template
 def display_status(hero, monster):
-    print("\n   === Evolution Status ===")
-    print(f"    Hero - Name: {hero.name}, Level: {hero.level}, Combat Strength: {hero.combat_strength}, Special Ability: {'Yes' if hero.special_ability else 'No'}")
-    print(f"    Monster - Level: {monster.level}, Combat Strength: {monster.combat_strength}, Evolved: {'Yes' if monster.evolved else 'No'}")
-    print("     ========================\n")
+    print("\n       === Evolution Status ===")
+    print(f"        Hero - Name: {hero.name}, Level: {hero.level}, Health: {hero.health_points}, Combat Strength: {hero.combat_strength}, Special Ability: {'Yes' if hero.special_ability else 'No'}")
+    print(f"        Monster - Level: {monster.level}, Combat Strength: {monster.combat_strength}, Evolved: {'Yes' if monster.evolved else 'No'}")
+    print("         ========================\n")
 
