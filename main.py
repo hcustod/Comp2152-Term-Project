@@ -9,14 +9,6 @@ from partyGenerator.models import Monster
 from dreamLevels import run_dream_levels
 
 
-small_dice_options = list(range(1, 7))
-big_dice_options = list(range(1, 21))
-
-weapons = ["Fist", "Knife", "Club", "Gun", "Bomb", "Nuclear Bomb"]
-loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
-monster_powers = { "Fire Magic": 2, "Freeze Time": 4, "Super Hearing": 6 }
-
-
 def get_valid_input(prompt, valid_range, error_message):
     while True:
         user_input = input(prompt)
@@ -28,7 +20,15 @@ def get_valid_input(prompt, valid_range, error_message):
 
 def main_game(current_user):
 
-    global loot_options
+    
+    small_dice_options = list(range(1, 7))
+    big_dice_options = list(range(1, 21))
+
+    weapons = ["Fist", "Knife", "Club", "Gun", "Bomb", "Nuclear Bomb"]
+    loot_options = ["Health Potion", "Poison Potion", "Secret Note", "Leather Boots", "Flimsy Gloves"]
+    monster_powers = { "Fire Magic": 2, "Freeze Time": 4, "Super Hearing": 6 }
+
+
     party = generate_party()
     first_hero = party[0]
     monster = Monster()
