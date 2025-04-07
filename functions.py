@@ -153,6 +153,8 @@ def adjust_combat_strength(hero_str, monster_str):
         else:
             print("    |    ... Based on your previous game, neither the hero nor the monster's combat strength will be increased")
 
+    return hero_str, monster_str
+
 # Eric Laudrum:
 # Create an account file in accounts.txt
 def create_account():

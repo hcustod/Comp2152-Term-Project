@@ -38,7 +38,6 @@ def main_game():
 
     for _ in range(2):
         _, belt = functions.collect_loot(loot_options, belt)
-    print("    |    Your belt: ", sorted(belt))
 
 
     # Loot bag
@@ -103,8 +102,7 @@ def main_game():
         print("--- Your weapon is meh")
     else:
         print("--- Nice weapon, friend!")
-    if weapons[weapon_roll - 1] != "Fist":
-        print("    |    --- Thank goodness you didn't roll the Fist...")
+
 
     # Monster magic roll
     print("    |", end="    ")
@@ -134,8 +132,8 @@ def main_game():
 
     # Analyze monster vs character
     input("Analyze the roll (Press enter)")
-    print("    |    --- You are matched in strength: " + str(monster.combat_strength == first_hero.combat_strength))
-    print("    |    --- You have a strong player: " + str((first_hero.combat_strength + first_hero.health_points) >= 15))
+    print("    |    You are matched in strength: " + str(monster.combat_strength == first_hero.combat_strength))
+    print("    |    You have a strong first hero: " + str((first_hero.combat_strength + first_hero.health_points) >= 15))
     print("    |", end="    ")
 
 
@@ -191,17 +189,17 @@ if __name__ == "__main__":
         case "3":
             print("\n[3] Create an account")
             current_user = functions.create_account()
+    print(r"""**************************************************************************************
 
+     ____                             _   _                                     
+    |  _ \ _ __ ___  __ _ _ __ ___   | | | | __ _ _ __ ___  _ __ ___   ___ _ __ 
+    | | | | '__/ _ \/ _` | '_ ` _ \  | |_| |/ _` | '_ ` _ \| '_ ` _ \ / _ \ '__|
+    | |_| | | |  __/ (_| | | | | | | |  _  | (_| | | | | | | | | | | |  __/ |   
+    |____/|_|  \___|\__,_|_| |_| |_| |_| |_|\__,_|_| |_| |_|_| |_| |_|\___|_|      
+
+**************************************************************************************""")
     while True:
-        print(r"""**************************************************************************************
 
-             ____                             _   _                                     
-            |  _ \ _ __ ___  __ _ _ __ ___   | | | | __ _ _ __ ___  _ __ ___   ___ _ __ 
-            | | | | '__/ _ \/ _` | '_ ` _ \  | |_| |/ _` | '_ ` _ \| '_ ` _ \ / _ \ '__|
-            | |_| | | |  __/ (_| | | | | | | |  _  | (_| | | | | | | | | | | |  __/ |   
-            |____/|_|  \___|\__,_|_| |_| |_| |_| |_|\__,_|_| |_| |_|_| |_| |_|\___|_|      
-
-        **************************************************************************************""")
         print("\n=== Main Menu ===")
         print("1. Start Battle")
         print("2. Explore Map")
